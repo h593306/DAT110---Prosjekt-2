@@ -17,6 +17,7 @@ public class Storage {
 	// data structure for managing currently connected clients
 	// maps from user to corresponding client session object
 	
+	
 	protected ConcurrentHashMap<String, ClientSession> clients;
 
 	public Storage() {
@@ -55,8 +56,8 @@ public class Storage {
 		// TODO: add corresponding client session to the storage
 		// See ClientSession class
 		
-		throw new UnsupportedOperationException(TODO.method());
-		
+		ClientSession session = new ClientSession(user, connection);
+		clients.put(user, session);
 	}
 
 	public void removeClientSession(String user) {
@@ -64,38 +65,35 @@ public class Storage {
 		// TODO: disconnet the client (user) 
 		// and remove client session for user from the storage
 		
-		throw new UnsupportedOperationException(TODO.method());
-		
+		clients.get(user).disconnect();
+		clients.remove(user);
 	}
 
 	public void createTopic(String topic) {
 
 		// TODO: create topic in the storage
 
-		throw new UnsupportedOperationException(TODO.method());
-	
+		subscriptions.put(topic, ConcurrentHashMap.newKeySet());
 	}
 
 	public void deleteTopic(String topic) {
 
 		// TODO: delete topic from the storage
 
-		throw new UnsupportedOperationException(TODO.method());
-		
+		subscriptions.remove(topic);
 	}
 
 	public void addSubscriber(String user, String topic) {
 
 		// TODO: add the user as subscriber to the topic
 		
-		throw new UnsupportedOperationException(TODO.method());
-		
+		subscriptions.get(topic).add(user);
 	}
 
 	public void removeSubscriber(String user, String topic) {
 
 		// TODO: remove the user as subscriber to the topic
 
-		throw new UnsupportedOperationException(TODO.method());
+		subscriptions.get(topic).remove(user);
 	}
 }
